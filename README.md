@@ -31,9 +31,18 @@ Anahtar **yalnızca dev sunucusunda** (`/api/brain` proxy'si) kullanılır; tara
 
 ---
 
+## İki Katmanlı Mimari: Edge (yerinde) + Bulut (Yönetilen CSIRT)
+
+BilSec Guardian iki fiziksel düzlemde çalışır ve bu ayrım artık ekranlara yansır:
+
+- **🖥️ BilSec Edge — müşteri lokasyonunda (on-prem cihaz).** Kimlik yönetimi (Directory), yerinde altyapı (DHCP/DNS/VPN/sertifika/yedek), log/telemetri toplama, EDR ajanları ve **yerelde çalışan otomatik izolasyon** (Hammer) bu cihazda yaşar. Ağ kopsa bile temel koruma otonom sürer.
+- **☁️ BilSec Bulut SOC — Yönetilen CSIRT-as-a-Service.** Çok-müşterili SIEM agregasyonu, Atlas triyajı, olay/vaka yönetimi, SOME → SGB/USOM bildirimi, Scribe raporlama ve 7/24 SOC nöbeti BilSec'in merkezi bulutunda **hizmet olarak** işletilir. Bir bulut SOC, sahadaki tüm Edge cihazlarını izler (**N müşteri lokasyonu → 1 bulut SOC**). Görevler ayrılığı korunur: BilSec bağımsız operatördür, müşterinin BT'si değil.
+
+Sağ üstteki üç yönlü anahtar bu düzlemleri gezmenizi sağlar: **Müşteri · Yönetici**, **Müşteri · Uzman**, **BilSec Bulut SOC**. Bulut SOC portföyünde "Bu demo" etiketli müşteriye (Örnek Savunma A.Ş.) tıklamak, o müşterinin tek-kiracılı Uzman ekranlarına iner; Uzman kenar çubuğundaki "☁️ Bulut SOC portföyüne dön" ile geri çıkılır.
+
 ## Demo Akışı (3–4 dakika)
 
-Uygulama **Yönetici (Patron) Görünümü** ile açılır: jargonsuz, 4 büyük kart (Güvenlik Durumu trafik ışığı, Belgeye Hazırlık, BilSec Bugün Ne Yaptı, Sıradaki Adım). İlk açılışta otomatik **tanıtım turu** başlar (sağ üstten tekrar izlenebilir). Sağ üstteki **Yönetici ⇄ Uzman** anahtarı teknik katmanı açar; her karttaki "Detayları gör" ilgili teknik ekrana götürür.
+Uygulama **Yönetici (Patron) Görünümü** ile açılır: jargonsuz, 4 büyük kart (Güvenlik Durumu trafik ışığı, Belgeye Hazırlık, BilSec Bugün Ne Yaptı, Sıradaki Adım). İlk açılışta otomatik **tanıtım turu** başlar (sağ üstten tekrar izlenebilir). Sağ üstteki görünüm anahtarı teknik katmanı ve bulut SOC'u açar; her karttaki "Detayları gör" ilgili teknik ekrana götürür.
 
 Aşağıdaki teknik (Uzman) akış, "Detayları gör" ya da anahtar ile açılır:
 
@@ -72,6 +81,7 @@ src/
     directory.js          OU ağacı, kullanıcılar, bilgisayarlar, gruplar, dizin politikaları
     edge.js               Yerinde altyapı: servisler, DHCP, DNS, paylaşım, VPN, sertifika
     soc.js                SIEM alarmları, vakalar, zaman çizelgesi, SOME, SGB bildirimleri
+    cloud.js              Bulut SOC: çok-müşterili portföy, Edge heartbeat, SLA, nöbet ekibi
     fallbacks.js          Önceden üretilmiş yapay zekâ çıktıları
   lib/
     ai.js                 BilSec Brain istemcisi (/api/brain + fallback)
@@ -86,6 +96,7 @@ src/
     Brain.jsx             Yapay zekâ: politika / anonimleştirme / boşluk analizi
     Ransomware.jsx        Fidye koruması + izolasyon simülasyonu
     Report.jsx            Uyum raporu (yazdır/PDF)
+    CloudSoc.jsx          BilSec Bulut SOC: müşteri portföyü, çok-müşterili alarm akışı, nöbet
     ui.jsx                Ortak arayüz bileşenleri
 vite.config.js            BilSec Brain proxy (ANTHROPIC_API_KEY sunucu tarafında)
 ```
