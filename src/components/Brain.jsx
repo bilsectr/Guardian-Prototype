@@ -38,7 +38,7 @@ export default function Brain({
     <div className="space-y-6">
       <Header
         baslik="BilSec Brain — Yapay Zekâ Ajanı"
-        altBaslik="Anthropic Claude ile canlı üretim · KOBİ ölçeğine uygun, Türkçe çıktı"
+        altBaslik="Büyük dil modeli ile canlı üretim · KOBİ ölçeğine uygun, Türkçe çıktı"
         hedefSeviye={hedefSeviye}
         setHedefSeviye={setHedefSeviye}
       />
@@ -85,13 +85,13 @@ export function KaynakRozet({ source, model }) {
         backgroundColor: canli ? '#16c9ac1f' : '#f59e0b1f',
         color: canli ? '#16c9ac' : '#f59e0b',
       }}
-      title={canli ? `Model: ${model || 'claude'}` : 'API anahtarı yok — gömülü örnek çıktı'}
+      title={canli ? `Model: ${model || 'BilSec Brain'}` : 'API anahtarı yok — gömülü örnek çıktı'}
     >
       <span
         className="h-1.5 w-1.5 rounded-full"
         style={{ backgroundColor: canli ? '#16c9ac' : '#f59e0b' }}
       />
-      {canli ? `Canlı üretim (${model || 'Claude'})` : 'Yedek (fallback) çıktı'}
+      {canli ? `Canlı üretim (${model || 'BilSec Brain'})` : 'Yedek (fallback) çıktı'}
     </span>
   )
 }
@@ -194,7 +194,7 @@ function Politika({ kontroller, secilenKontrol, setSecilenKontrol }) {
             <div className="flex h-full min-h-[300px] flex-col items-center justify-center text-center text-slate-500">
               <div className="text-4xl">📝</div>
               <p className="mt-3 max-w-sm text-sm">
-                "Politika üret" düğmesine basın — seçili kontrol için Claude, uygulanabilir bir Türkçe
+                "Politika üret" düğmesine basın — seçili kontrol için BilSec Brain, uygulanabilir bir Türkçe
                 politika taslağı oluşturacak.
               </p>
             </div>
@@ -345,7 +345,7 @@ function Bosluk({ kontroller }) {
             <div className="flex h-full min-h-[300px] flex-col items-center justify-center text-center text-slate-500">
               <div className="text-4xl">🎯</div>
               <p className="mt-3 max-w-sm text-sm">
-                Eksik kontrolleri Claude'a gönderin; efor tahminleriyle önceliklendirilmiş bir yol
+                Eksik kontrolleri BilSec Brain'e gönderin; efor tahminleriyle önceliklendirilmiş bir yol
                 haritası üretilsin.
               </p>
             </div>

@@ -19,15 +19,15 @@ Ardından tarayıcıda **http://localhost:5173** açılır. Uygulama tek komutla
 
 ## Yapay Zekâ Anahtarı (opsiyonel ama önerilir)
 
-BilSec Brain, canlı politika üretimi için Anthropic Claude API kullanır. Anahtar **yoksa** uygulama yine çalışır — yapay zekâ özellikleri önceden gömülü örnek (fallback) çıktıyı gösterir, böylece görüşmede internet/anahtar riski olmaz.
+BilSec Brain, canlı politika üretimi için bir büyük dil modeli (LLM) API'si kullanır. Yapılandırma **yoksa** uygulama yine çalışır — yapay zekâ özellikleri önceden gömülü örnek (fallback) çıktıyı gösterir, böylece görüşmede internet/anahtar riski olmaz.
 
 Canlı çağrıyı etkinleştirmek için:
 
 1. `.env.example` dosyasını `.env` olarak kopyalayın.
-2. `ANTHROPIC_API_KEY=` satırına anahtarınızı yazın.
+2. `AI_API_KEY`, `AI_API_URL` ve `AI_MODEL` değerlerini girin.
 3. `npm run dev`'i yeniden başlatın.
 
-Anahtar **yalnızca dev sunucusunda** (`/api/brain` proxy'si) kullanılır; tarayıcıya sızmaz. Model varsayılanı `claude-sonnet-5` olup `CLAUDE_MODEL` ile değiştirilebilir.
+Yapılandırma **yalnızca dev sunucusunda** (`/api/brain` proxy'si) kullanılır; tarayıcıya sızmaz. Model ve uç nokta tamamen `.env` üzerinden (`AI_MODEL` / `AI_API_URL`) belirlenir.
 
 ---
 
@@ -69,7 +69,7 @@ SIEM alarmı (İK-PC-07 fidye) → **Atlas** triyajı → **Vaka oluştur** → 
 - **Frontend:** React 18 + Vite + Tailwind CSS v4
 - **Grafik:** Recharts
 - **Veri:** Yerel JSON seed (`src/data/seed.js`) — gerçek SSB Siber Hijyen-KOBİ kontrolleri
-- **Yapay Zekâ:** Anthropic Claude API, hafif Vite middleware proxy (`/api/brain`) üzerinden; her özellik için fallback çıktı gömülü
+- **Yapay Zekâ:** Yapılandırılabilir büyük dil modeli (LLM) API'si, hafif Vite middleware proxy (`/api/brain`) üzerinden; her özellik için fallback çıktı gömülü
 
 ## Proje Yapısı
 
@@ -98,7 +98,7 @@ src/
     Report.jsx            Uyum raporu (yazdır/PDF)
     CloudSoc.jsx          BilSec Bulut SOC: müşteri portföyü, çok-müşterili alarm akışı, nöbet
     ui.jsx                Ortak arayüz bileşenleri
-vite.config.js            BilSec Brain proxy (ANTHROPIC_API_KEY sunucu tarafında)
+vite.config.js            BilSec Brain proxy (AI_API_KEY sunucu tarafında)
 ```
 
 ---
