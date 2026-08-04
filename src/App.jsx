@@ -21,6 +21,7 @@ import Incidents from './components/Incidents.jsx'
 import Brain from './components/Brain.jsx'
 import Ransomware from './components/Ransomware.jsx'
 import Report from './components/Report.jsx'
+import CloudSoc from './components/CloudSoc.jsx'
 
 const TUR_ANAHTAR = 'bilsec_tur_v1'
 
@@ -178,6 +179,12 @@ export default function App() {
     setSekme(hedefSekme)
   }
 
+  // Bulut SOC portföyünden aktif müşteriye (tek-kiracılı ekranlar) geçiş
+  function musteriAc() {
+    setGorunum('uzman')
+    setSekme('dashboard')
+  }
+
   const turHedefi = turAktif && gorunum === 'yonetici' ? TUR_ADIMLAR[turAdim].target : null
 
   const ortak = {
@@ -191,6 +198,34 @@ export default function App() {
     durumDegistir,
     politikayaGonder,
     setSekme,
+  }
+
+  // ===== BİLSEC BULUT SOC (YÖNETİLEN CSIRT) GÖRÜNÜMÜ =====
+  if (gorunum === 'soc') {
+    return (
+      <div className="min-h-screen">
+        <header className="no-print flex items-center justify-between border-b border-ink-700 bg-ink-900/60 px-8 py-4 backdrop-blur">
+          <div className="flex items-center gap-2">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-500 text-lg font-black text-ink-950">
+              B
+            </div>
+            <div>
+              <div className="text-[15px] font-bold leading-tight tracking-tight">
+                BilSec <span className="text-accent-400">Guardian</span>
+              </div>
+              <div className="text-[10px] uppercase tracking-widest text-slate-500">
+                Bulut SOC · Yönetilen CSIRT
+              </div>
+            </div>
+          </div>
+          <ModTogglesi gorunum={gorunum} setGorunum={setGorunum} />
+        </header>
+
+        <main className="px-8 py-8">
+          <CloudSoc onMusteriAc={musteriAc} />
+        </main>
+      </div>
+    )
   }
 
   // ===== YÖNETİCİ (PATRON) GÖRÜNÜMÜ — varsayılan =====
@@ -254,12 +289,20 @@ export default function App() {
               </div>
             </div>
           </div>
-          <button
-            onClick={() => setGorunum('yonetici')}
-            className="mt-4 flex w-full items-center justify-center gap-1.5 rounded-lg border border-ink-600 py-2 text-xs font-medium text-slate-300 transition hover:border-accent-500 hover:text-accent-400"
-          >
-            ← Yönetici Görünümüne dön
-          </button>
+          <div className="mt-4 flex flex-col gap-1.5">
+            <button
+              onClick={() => setGorunum('soc')}
+              className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-ink-600 py-2 text-xs font-medium text-slate-300 transition hover:border-accent-500 hover:text-accent-400"
+            >
+              ☁️ Bulut SOC portföyüne dön
+            </button>
+            <button
+              onClick={() => setGorunum('yonetici')}
+              className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-ink-600 py-2 text-xs font-medium text-slate-300 transition hover:border-accent-500 hover:text-accent-400"
+            >
+              ← Yönetici Görünümüne dön
+            </button>
+          </div>
         </div>
 
         <nav className="flex flex-1 flex-col gap-1 overflow-y-auto">
@@ -348,28 +391,27 @@ export default function App() {
 }
 
 function ModTogglesi({ gorunum, setGorunum }) {
+  const secenekler = [
+    { id: 'yonetici', ad: 'Müşteri · Yönetici' },
+    { id: 'uzman', ad: 'Müşteri · Uzman' },
+    { id: 'soc', ad: 'BilSec Bulut SOC' },
+  ]
   return (
     <div className="flex items-center gap-2">
       <span className="hidden text-xs text-slate-500 sm:inline">Görünüm:</span>
       <div className="flex rounded-lg border border-ink-700 bg-ink-850 p-0.5">
-        <button
-          onClick={() => setGorunum('yonetici')}
-          className={
-            'rounded-md px-3 py-1.5 text-xs font-semibold transition ' +
-            (gorunum === 'yonetici' ? 'bg-accent-500 text-ink-950' : 'text-slate-400 hover:text-white')
-          }
-        >
-          Yönetici
-        </button>
-        <button
-          onClick={() => setGorunum('uzman')}
-          className={
-            'rounded-md px-3 py-1.5 text-xs font-semibold transition ' +
-            (gorunum === 'uzman' ? 'bg-accent-500 text-ink-950' : 'text-slate-400 hover:text-white')
-          }
-        >
-          Uzman
-        </button>
+        {secenekler.map((s) => (
+          <button
+            key={s.id}
+            onClick={() => setGorunum(s.id)}
+            className={
+              'rounded-md px-3 py-1.5 text-xs font-semibold transition ' +
+              (gorunum === s.id ? 'bg-accent-500 text-ink-950' : 'text-slate-400 hover:text-white')
+            }
+          >
+            {s.ad}
+          </button>
+        ))}
       </div>
     </div>
   )
