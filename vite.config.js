@@ -59,7 +59,7 @@ export default defineConfig(({ mode }) => {
   // '' prefix → VITE_ öneki olmayan değişkenleri de yükler (ANTHROPIC_API_KEY).
   const env = loadEnv(mode, process.cwd(), '')
   return {
-    base: './',
+    base: '/Guardian-Prototype/',
     plugins: [react(), tailwindcss(), bilsecBrainProxy(env)],
     server: { port: 5173 },
   }
