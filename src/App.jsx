@@ -211,7 +211,7 @@ export default function App() {
             </div>
             <div>
               <div className="text-[15px] font-bold leading-tight tracking-tight">
-                BilSec <span className="text-accent-400">Guardian</span>
+                BilSec
               </div>
               <div className="text-[10px] uppercase tracking-widest text-slate-500">
                 Bulut SOC · Yönetilen CSIRT
@@ -239,7 +239,7 @@ export default function App() {
             </div>
             <div>
               <div className="text-[15px] font-bold leading-tight tracking-tight">
-                BilSec <span className="text-accent-400">Guardian</span>
+                BilSec
               </div>
               <div className="text-[10px] uppercase tracking-widest text-slate-500">
                 Yönetici Görünümü
@@ -282,7 +282,7 @@ export default function App() {
             </div>
             <div>
               <div className="text-[15px] font-bold leading-tight tracking-tight">
-                BilSec <span className="text-accent-400">Guardian</span>
+                BilSec
               </div>
               <div className="text-[10px] uppercase tracking-widest text-slate-500">
                 Uzman Görünümü
