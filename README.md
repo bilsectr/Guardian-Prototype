@@ -1,4 +1,4 @@
-# BilSec Guardian
+# BilSec
 
 ## Kurulum ve Çalıştırma
 
